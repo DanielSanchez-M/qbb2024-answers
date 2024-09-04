@@ -35,3 +35,10 @@
   48 chr22
   84 chr14
     - The distribution of IG pseudogenes are spread across more chromosomes than IG genes. While chromosomes 22, 14, 15, 16, 2 all have both IG genes and IG pseudogenes present.
+
+# Q2
+- grep pseudogene gene.gtf will not be specific to the IG genes and instead gather the data from all those classified as pseudogene. Including the TR genes, non-coding genes,etc.
+- (qb24) cmdb@QuantBio-10 d2_exercises % grep "gene_type.*pseduogene.*tag" genes.gtf
+
+# Q3
+- (base) cmdb@QuantBio-10 d2_exercises % cut -f1,4,5,14 gene-tabs.gtf > genes.bed
