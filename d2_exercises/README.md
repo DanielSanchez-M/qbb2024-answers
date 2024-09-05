@@ -16,7 +16,7 @@
 
 # Q1
 - (qb24) cmdb@QuantBio-10 d2_exercises % grep -e "IG_._gene" gene.gtf | cut -f 1 | uniq -c | sort 
-   1 chr21
+   - 1 chr21
    6 chr16
   16 chr15
   48 chr22
@@ -24,7 +24,7 @@
   91 chr14
 
 - (qb24) cmdb@QuantBio-10 d2_exercises % grep -e "IG_._pseudogene" -e "IG_pseudogene" gene.gtf | cut -f 1 | uniq -c | sort
-    1 chr1
+    - 1 chr1
    1 chr10
    1 chr18
    1 chr8
@@ -38,7 +38,8 @@
 
 # Q2
 - grep pseudogene gene.gtf will not be specific to the IG genes and instead gather the data from all those classified as pseudogene. Including the TR genes, non-coding genes,etc.
-- (qb24) cmdb@QuantBio-10 d2_exercises % grep "gene_type.*pseduogene.*tag" genes.gtf
+- A better way to search for the specific pseudogene under gene_type would be to use the grep function and specify specifically which terms should be included and which ones should be excluded. The terms overlap would be added to be excluded.
+- (qb24) cmdb@QuantBio-10 d2_exercises % grep -F "pseudogene" genes.gtf | grep  -v "overlap" | less -S
 
 # Q3
 - (base) cmdb@QuantBio-10 d2_exercises % cut -f1,4,5,14 gene-tabs.gtf > genes.bed
