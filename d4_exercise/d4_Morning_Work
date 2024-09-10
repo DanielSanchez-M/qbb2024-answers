@@ -1,0 +1,90 @@
+#!/usr/bin/env python3
+
+# load the gene-tissue pairs
+    # file contains three columns, geneID, gene name, and tissue, separated by tabs
+    # you will be checking this information later by the geneID,
+    #   create a dictionary keyed by the geneID with the tissue as the value
+
+# import sys and numpy
+import sys
+
+import numpy
+
+filename = sys.argv[1]                              # Get the Gene Tissue File (gene_tissue.tsv) [should be in position 1 in Unix] and name it as 'filename'
+fs = open(filename, mode ='r')                      # Open the File
+relevant_samples = {}                               # Create a dictionary to hold samples for gene-tissue pairs
+for line in fs:                                     # Step through the file
+    fields = line.rstrip("\n").split("\t")          # Strip new character input | split by tab bcuz its a .tsv
+    key = fields[0]                                 # Create key from gene and tissue
+    relevant_samples[key] = fields[2]               # Initialize dictionary from key with list to hold samples
+#print(relevant_samples)                            # Print Test 1
+fs.close()                                          # Close the gene_tissue.tsv file
+
+# which tissue corresponds to which sampleIDs
+    # each column is labeled by a sampleID in GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_tpm.gct
+    # each sampleID corresponds to a particular subject and tissue in GTEx_Analysis_v8_Annotations_SampleAttributesDS.txt 
+    #   The columns that you are interested are SAMPID (the sample ID) and SMTSD (the specific tissue label). 0 & 6
+    # you will be looking things up by the tissue name so you will want to create a dictionary using the tissue as the key
+
+filename = sys.argv[2]                              # Get the Meta Data Tissue File (GTEx_Analysis_v8_Annotations_SampleAttributesDS.txt) [should be in position 1 in Unix] and name it as filename
+fs = open(filename, mode ='r')                      # Open the File
+fs.readline()                                       # Skip line
+tissue_samples = {}                                 # Create a dictionary to hold samples for tissue name
+for line in fs:                                     # Step through the file
+    fields = line.rstrip("\n").split("\t")          # Strip new character input | split by tab
+    key = fields[6]                                 # Create key for tissue
+    value = fields[0]                               # Create key for sample
+    tissue_samples.setdefault(key, [])              # Search through key and create list with new data
+    tissue_samples[key].append(value)               # Add things to the list
+#print(tissue_samples)                              # Print Test 2
+fs.close()                                          # Close the GTEx_Analysis_v8_Annotations_SampleAttributesDS.txt file
+
+filename = sys.argv[3]                              # Get the Meta Data Tissue File
+fs = open(filename, mode ='r')                      # Open the File
+fs.readline()                                       # Skip line
+fs.readline()                                       # Skip line
+header = fs.readline().rstrip("\n").split("\t")     # Strip new character input | split by tab
+header = header[2:]                                 # Header will now have the header of all sample names in RNAseq file
+
+tissue_columns = {}                                 # Create a dictionary to hold samples for tissue columns
+for tissue, samples in tissue_samples.items():      # Start for loop
+    tissue_columns.setdefault(tissue, [])           # Search through the loop
+    for sample in samples:                          # Create a nested 'for loop'
+        if sample in header:                        # If the sample is in the header then
+            position = header.index(sample)         # search through the list and provide the position of where the sample is in
+            tissue_columns[tissue].append(position) # add which columns has that tissue data
+#print(tissue_columns)                              # Print Test 3
+
+
+maxvalue = 0                                        # Set a max value that is low for the 'for loop' to go through and update to show the true max number of genes
+maxvalueKey = ""                                    # Will update the result at the end and output it as a string of text
+for tissues, sample in tissue_columns.items():      # a 'for loop' that goes through the tissue columns lists where each position was identified,
+    if len(sample) > maxvalue:                      ## and then it numbers them until a tissue type with the highest number is found
+        maxvalue = len(sample)
+        maxvalueKey = tissues                       # This will bind to the maxValueKey to show the tissue type that has the max amount
+# print(maxvalueKey)                                # Print Max Value Amount
+
+### Which Tissue type has greatest amount of samples: Muscle - Skeletal         ###
+
+minvalue = 100000000000000                          # Set a min value that is high for the 'for loop' to go through and update to show the true min number of genes
+minvalueKey = ""                                    # Will update the result at the end and output it as a string of text
+for tissues, sample in tissue_columns.items():      # a 'for loop' that goes through the tissue columns lists where each position was identified,
+    if len(sample) < minvalue:                      ##  and then it numbers them until a tissue type with the lowest number is found
+        minvalue = len(sample)
+        minvalueKey = tissues                       # This will bind to the minValueKey to show the tissue type that has the min amount
+# print(minvalueKey)                                # Print Min Value Amount
+
+## Tissue type with fewest amount of samples: Cells - Leukemia cell line (CML)   ###
+
+fs.close()                                          # Close the GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_tpm.gct file
+
+# Q6 (OLD Start of Code)
+# f = open("test_data.gct", "r")
+# for l in f:
+#     l = l.strip().split("\t")
+
+#     geneName = l[0]                               # Name of the gene
+
+#     if geneName in relevant_samples.keys():       # If that gene is in my list of relevant sample
+#         myTissue = relevant_samples[geneName]     # We pull out the tissue type
+#         print(tissue_columns[myTissue])           # We look into the tissue file and pull out every column that tissue is present in
