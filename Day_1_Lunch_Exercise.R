@@ -46,9 +46,15 @@ df_npj8 %>%
 ## Difference = They used different sequencing techniques
 
 #7. SMATSSCR
-df %>%
+meanSMATSSCR <- df %>%
   filter(!is.na(SMATSSCR)) %>%
-  group_by(SMATSSCR) %>%
-  summarize(n())
-##A majority of the samples have a mean autolysis score of 1 and fewer samples have an autolysis score greater than or equal to 2. 0 = 3554, 1= 10,410, 2 = 1582, 3 = 193
-## This report can be presented as a histogram or a bar graph
+  group_by(SUBJECT) %>%
+  summarize(mean(SMATSSCR))
+
+  view(meanSMATSSCR)
+  
+  sum(meanSMATSSCR == 0)
+
+## There are 15 subjects with a mean SMATSSCR of 0
+## A majority of the samples have a mean autolysis score below 1.
+## This report can be presented as a bar graph or histogram.
