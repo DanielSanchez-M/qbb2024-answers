@@ -38,8 +38,7 @@
 
 # Q2
 - grep pseudogene gene.gtf will not be specific to the IG genes and instead gather the data from all those classified as pseudogene. Including the TR genes, non-coding genes,etc.
-- A better way to search for the specific pseudogene under gene_type would be to use the grep function and specify specifically which terms should be included and which ones should be excluded. The terms overlap would be added to be excluded.
-- (qb24) cmdb@QuantBio-10 d2_exercises % grep -F "pseudogene" genes.gtf | grep  -v "overlap" | less -S
+- A better way to classify would be to specify IG_pseudogene, as I had done in the code in Q1 above.
 
 # Q3
 - (base) cmdb@QuantBio-10 d2_exercises % cut -f1,4,5,14 gene-tabs.gtf > genes.bed
