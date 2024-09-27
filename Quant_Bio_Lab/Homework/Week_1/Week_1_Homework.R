@@ -30,11 +30,11 @@ x3_plot <- ggplot() +
   labs(title = "Genome 3x Coverage Distribution with Poisson \n and Normal Distribution",
        x = "Coverage",
        y = "Frequency") +
-  scale_fill_manual(name = "Legend", values = c("Genome 3x Coverage" = "blue")) +  # Adds histogram to the legend
-  scale_color_manual(name = "Legend", values = c("Poisson Distribution" = "red", "Normal Distribution" = "green")) +  # Adds the distribution lines to the legend
+  scale_fill_manual(name = "Data", values = c("Genome 3x Coverage" = "blue")) +  # Adds histogram to the legend
+  scale_color_manual(name = "Distributions", values = c("Poisson Distribution" = "red", "Normal Distribution" = "green")) +  # Adds the distribution lines to the legend
   theme_minimal()
 
-ggsave(filename = "~/qbb2024-answers/Quant_Bio_Lab/Homework/Week_1/ex1_3x_cov.png", plot = x3_plot, width = 10, height = 6, dpi = 300)
+ggsave(filename = "~/qbb2024-answers/Quant_Bio_Lab/Homework/Week_1/ex1_3x_cov.jpg", plot = x3_plot, width = 10, height = 6, dpi = 300)
 
 
 
@@ -67,11 +67,11 @@ x10_plot <- ggplot() +
   labs(title = "Genome 10x Coverage Distribution with Poisson \n and Normal Distribution",
        x = "Coverage",
        y = "Frequency") +
-  scale_fill_manual(name = "Legend", values = c("Genome 10x Coverage" = "blue")) +  # Adds histogram to the legend
-  scale_color_manual(name = "Legend", values = c("Poisson Distribution" = "red", "Normal Distribution" = "green")) +  # Adds the distribution lines to the legend
+  scale_fill_manual(name = "Data", values = c("Genome 10x Coverage" = "blue")) +  # Adds histogram to the legend
+  scale_color_manual(name = "Distributions", values = c("Poisson Distribution" = "red", "Normal Distribution" = "green")) +  # Adds the distribution lines to the legend
   theme_minimal()
 
-ggsave(filename = "~/qbb2024-answers/Quant_Bio_Lab/Homework/Week_1/ex1_10x_cov.png", plot = x10_plot, width = 10, height = 6, dpi = 300)
+ggsave(filename = "~/qbb2024-answers/Quant_Bio_Lab/Homework/Week_1/ex1_10x_cov.jpg", plot = x10_plot, width = 10, height = 6, dpi = 300)
 
 
 
@@ -104,8 +104,8 @@ x30_plot <- ggplot() +
   labs(title = "Genome 30x Coverage Distribution with Poisson \n and Normal Distribution",
        x = "Coverage",
        y = "Frequency") +
-  scale_fill_manual(name = "Legend", values = c("Genome 30x Coverage" = "blue")) +  # Adds histogram to the legend
-  scale_color_manual(name = "Legend", values = c("Poisson Distribution" = "red", "Normal Distribution" = "green")) +  # Adds the distribution lines to the legend
+  scale_fill_manual(name = "Data", values = c("Genome 30x Coverage" = "blue")) +  # Adds histogram to the legend
+  scale_color_manual(name = "Distributions", values = c("Poisson Distribution" = "red", "Normal Distribution" = "green")) +  # Adds the distribution lines to the legend
   theme_minimal()
 
-ggsave(filename = "~/qbb2024-answers/Quant_Bio_Lab/Homework/Week_1/ex1_30x_cov.png", plot = x30_plot, width = 10, height = 6, dpi = 300)
+ggsave(filename = "~/qbb2024-answers/Quant_Bio_Lab/Homework/Week_1/ex1_30x_cov.jpg", plot = x30_plot, width = 10, height = 6, dpi = 300)
