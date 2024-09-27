@@ -1,0 +1,13 @@
+Answers to Question 2.3
+
+Q1) Which feature appears to be under the highest level of purifying (negative) selection? How can you tell?
+
+The exons (green line) appear to be under the highest level of purifying selection. This is observed by the enrichment of exons steadily decreases with increasing MAF (Minor Allele Frequency), which also decreases more than the enrichment of introns, cCREs, and other features.
+
+Q2) Why do you think most features start out more enriched at lower MAFs and become more depleted as the MAF increases?
+
+Enrichment at lower MAFs may be due to the SNPs being concentrated in certain functional features, like the exons, where changes may have significant impacts. So then as the MAF increases, the SNPs become more common, which would indicate that they are selected less which reduces their enrichment, thereby becoming depleted.
+
+Q3) Does the relative level of enrichment/depletion of features with respect to each other make sense? Explain.
+
+Yes, the relative levels of enrichment/depletion make sense. Exons and cCREs which are more functional regions, are under stronger selective pressure because mutations in these regions can directly affect gene function or regulation. In contrast, introns and other regions are under less selective pressure thereby maintaining consistent levels of enrichment across MAFs.
