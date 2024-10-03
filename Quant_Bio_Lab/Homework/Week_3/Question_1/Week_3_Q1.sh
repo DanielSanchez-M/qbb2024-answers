@@ -2,12 +2,13 @@
 
 # Question 1.1: How long are the sequencing reads?
 ## Code: 
-head -n 2 A01_09.fastq | tail -n 1 | wc -c
+head -n 2 A01_09.fastq | tail -n 1 | tr -d '\n' | wc -c
 ### head -n 2 A01_09.fastq              # Grabs the 2nd line from the fastQ file (sequence)
 ### tail -n 1                           # extracts the read sequence
+### tr -d '\n'                          # removes the new line character
 ### wc - c                              # counts the number of characters = length of sequence
 
-## Answer:  The sequence is 77bp long
+## Answer:  The sequence is 76bp long
 
 
 # Question 1.2. How many reads are present within the file?
@@ -48,4 +49,4 @@ fastqc A01_09.fastq                     # generates a quality control report of 
 #### From the formula given in class of P = 10 ^ (-Quality score / 10), then the probability that base is incorrect can be determined to be within 0.025% and 0.0316%, a very low rate for error.
 
 ### Do you observe much variation in quality with respect to the position in the read?
-#### Yes, from the quality scores there seems to be more variation on either end of the reads, while the centers have what appears to be higher quality (smaller boxplot spread).
+#### Yes, from the quality scores there seems to be more variation on either end of the reads, while the centers have what appears to be higher quality (smaller boxplot spread)
