@@ -23,7 +23,7 @@ wc -l A01_09.fastq | awk '{print $1/4}'
 # Question 1.3: Given your answers to 1 and 2, as well as knowledge of the length of the S. cerevisiae reference genome, what is the expected average depth of coverage?
 ## Code:
 genome_size = 12100000                  # S. cerevisiae reference genome length is about 12.1Mb
-echo "(669548 * 77) / 12100000" | bc    # Outputs the string as a methematical operation due to "bc"
+echo "(669548 * 76) / 12100000" | bc    # Outputs the string as a methematical operation due to "bc"
 
 ## Answer:  Expected average depth of coverage = 4
 
