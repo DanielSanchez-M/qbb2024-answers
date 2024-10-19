@@ -1,18 +1,18 @@
 # Exercise 1: Checking fastq quality
 ## Step 1.1: Open fastqc and load both sample files from the File menu.
 ### Question: Can you think of a reason why this sample does not match the expected GC content distribution and base content at the beginning of sequences?
-#### Answer: 
+#### Answer: The discrepencies of GC content especially at the beginning of the sequence may be due to the primer sequence that was used to do the reads.
 
 ## Step 1.2: Overrepresented sequences
 ### Question: What is the origin of the most overrepresented sequence in this sample? Does it make sense?
-#### Answer: 
+#### Answer: After BLASTing the sequence, it points to a serine protease 1 in drosophila. This would make sense, as protease is related to metabolism of proteins in digestion.
 
 # Exercise 2: Using MultiQC to check processed data quality
 ### Question: If you were to reject any samples with the percentage of unique reads less than 45%, how many samples would you keep?
-#### Answer: 
+#### Answer:  With a cut off of 45%, then only 15 samples would be retained.
 
 ### Question: Can you see the blocks of triplicates clearly? Try adjusting the min slider up. Does this suggest anything about consistency between replicates?
-#### Answer:
+#### Answer: No, the blocks are not well observed, this may be due to high variance of the replicates.
 
 # Exercise 3: Normalization and clustering
 
