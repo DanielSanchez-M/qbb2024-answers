@@ -56,7 +56,7 @@ ggsave("PCA_AGE.pdf", plot=PCA_AGE)
 ## Question: 1.3.3: What proportion of variance in the gene expression data is explained by each of the first two principal components? 
 ## Which principal components appear to be associated with which subject-level variables? 
 ## Interpret these patterns in your own words and record your answers as a comment in your code.
-### Answer: ... ... ...
+### Answer: The first two principal components have a proportion of variance of either 48% for PC1 and 7% for PC2. After looking at each of the different plots, it can be safe to assume that PC1 that has a 48% variance is associated with the Death Hardiness (DTHHRDY), in terms of death classification difference between natural causes or ventillator death. While PC2 must be the variance in gene expression.
 
 #____________________________________________________________
 # Exercise 2: Perform differential expression analysis
@@ -74,7 +74,7 @@ hist(vsd_df$WASH7P) # Visualize the WASH7P expression distribution
 lm(data = vsd_df, formula = WASH7P ~ SEX + DTHHRDY + AGE) %>%
   summary() %>%
   tidy()
-### Answer:
+### Answer: Taking a look at the p-value of sex_male that is 0.279, this is above the 0.05 threshold indicating the association between sex and the gene's expression is not statistically significant. Although with the estimate being 0.119, idicating a slight shift towards male preference, due to the data being insignificant, it can not be conclusive that the shift is reliable.
 
 #____________________________________________________________
 ## 2.1.2: Now repeat your analysis for the gene MAP7D2. Does this gene show evidence of sex-differential expression (and if so, in which direction)? Explain your answer.
@@ -83,7 +83,7 @@ hist(vsd_df$SLC25A47) # Visualize the MAP7D2 expression distribution
 lm(data = vsd_df, formula = SLC25A47 ~ SEX + DTHHRDY + AGE) %>%
   summary() %>%
   tidy()
-### Answer:
+### Answer: Since the p-value for this gene is 0.0257, which is below the 0.05 p-value threshold, then the data is significant and one can suggest that this gene has sex-differential expression. Along with the estimated value of 0.518, this indicates that the sex-differential is driven towards males rather than females.
 
 #____________________________________________________________
 # Step 2.2: Perform differential expression analysis “the right way” with DESeq2
@@ -103,14 +103,20 @@ data <- read_delim("Week_7_Data/gene_locations.txt")
 res_SEX <- left_join(res_SEX, data, by = "GENE_NAME")
 
 ## 2.3.2: How many genes exhibit significant differential expression between males and females at a 10% FDR?
-### Answer: 
+### Answer: We can filter through the results_SEX from 2.3 and count the number of rows that are associated to the gene count.
+significant_genes <- res_SEX %>%
+filter(padj < 0.1)
+num_significant_genes <- nrow(significant_genes)
+num_significant_genes
+### This outputs to a value of 262. Therefore there are 262 genes that exhibit significant differential expression between males and females at a 10% FDR.
 
 ## 2.3.3: Examine your top hits. Which chromosomes encode the genes that are most strongly upregulated in males versus females, respectively? 
 ## Are there more male-upregulated genes or female-upregulated genes near the top of the list? Interpret these results in your own words.
-### Answer:
+### Answer: After examining the top hits, it can be observed that the Y-chromosome encodes for more genes that are strongly upregulated. After filtering for the most significantly expressed genes by observing the padjusted values, it can be seen that a majority of those genes are associated/correlated to the Y-chromosome which is associated with males.
 
-## 2.3.4: Examine the results for the two genes (WASH7P and MAP7D2) that you had previously tested with the basic linear regression model in step 2.1. Are the results broadly consistent?
-### Answer:
+
+## 2.3.4: Examine the results for the two genes (WASH7P and SLC25A47) that you had previously tested with the basic linear regression model in step 2.1. Are the results broadly consistent?
+### Answer: Overall yes, the results that were outputted for these genes were correlated well. As WASH7P that did not show any significance towards sex-differential expression is associated with chromosome 1, something shared between males and females. While the other gene, SLC25A47 is associated with the X chromosome which would have quite significance Sex association.
 
 #____________________________________________________________
 # Step 2.4: Extract and interpret the results for differential expression by death classification
@@ -123,15 +129,19 @@ res_DTHHRDY <- res_DTHHRDY %>%
 
 res_DTHHRDY <- left_join(res_DTHHRDY, data, by = "GENE_NAME")
 ## 2.4.1: How many genes are differentially expressed according to death classification at a 10% FDR?
-### Answer:
+### Answer: There are approxiametly 16069 genes that are differentially expressed according to death classification at a 10% FDR?
+DTHHRDY_significant_genes <- res_DTHHRDY %>%
+  filter(padj < 0.1)
+DTHHRDY_num_significant_genes <- nrow(DTHHRDY_significant_genes)
+DTHHRDY_num_significant_genes
 ## 2.4.2: Interpret this result in your own words. Given your previous analyses, does it make sense that there would be more genes differentially expressed based on type of death compared to the number of genes differentially expressed according to sex?
-### Answer:
+### Answer: Yes, it would make since for there to be more variance in expression for genes associated with the type of death rather than sex, as there is greater complexity in terms of biology for death and more variability associated compared to sex differentiation between a Male and Female.
 
 #____________________________________________________________
 # Exercise 3: Visualization
 #____________________________________________________________
 
-ggplot(data = res_SEX, aes(x = log2FoldChange, y = -log10(pvalue))) +
+Sex_Volcano_Plot <- ggplot(data = res_SEX, aes(x = log2FoldChange, y = -log10(pvalue))) +
   geom_point(aes(color = (abs(log2FoldChange) > 2 & pvalue < 1e-20))) +
   geom_text(data = res_SEX %>% filter(abs(log2FoldChange) > 2 & pvalue < 1e-50),
             aes(x = log2FoldChange, y = -log10(pvalue) + 10, label = GENE_NAME), size = 3,) +
@@ -140,3 +150,7 @@ ggplot(data = res_SEX, aes(x = log2FoldChange, y = -log10(pvalue))) +
   scale_color_manual(values = c("gray", "coral")) +
   labs(y = expression(-log[10]("p-value")), x = expression(log[2]("fold change"))) +
   ggtitle("Volcano Plot of Differential Gene Expression by Sex")
+
+Sex_Volcano_Plot
+
+ggsave("Volcano Plot of Differential Gene Expression by Sex.pdf", plot=Sex_Volcano_Plot)
