@@ -56,7 +56,7 @@ ggsave("PCA_AGE.pdf", plot=PCA_AGE)
 ## Question: 1.3.3: What proportion of variance in the gene expression data is explained by each of the first two principal components? 
 ## Which principal components appear to be associated with which subject-level variables? 
 ## Interpret these patterns in your own words and record your answers as a comment in your code.
-### Answer: The first two principal components have a proportion of variance of either 48% for PC1 and 7% for PC2. After looking at each of the different plots, it can be safe to assume that PC1 that has a 48% variance is associated with the Death Hardiness (DTHHRDY), in terms of death classification difference between natural causes or ventillator death. While PC2 must be the variance in gene expression.
+### Answer: The first two principal components have a proportion of variance of either 48% for PC1 and 7% for PC2. After looking at each of the different plots, PC1 (which explains a significant 48% of the variance) may be capturing differences related to death hardiness, as there is notable separation in the PCA plot by this variable. This suggests that a large proportion of the variation in the dataset could be related to factors associated with death hardiness or conditions prior to death. While PC2 (7% variance) seems to be more associated with age group, as there is some degree of separation in that dimension with "older age" being more central with minimal vairance and those of younger age having a larger degree of variance, indicating that age may have a more subtle but still detectable effect on gene expression.
 
 #____________________________________________________________
 # Exercise 2: Perform differential expression analysis
