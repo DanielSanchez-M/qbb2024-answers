@@ -56,6 +56,8 @@ ggsave("PCA_AGE.pdf", plot=PCA_AGE)
 ## Question: 1.3.3: What proportion of variance in the gene expression data is explained by each of the first two principal components? 
 ## Which principal components appear to be associated with which subject-level variables? 
 ## Interpret these patterns in your own words and record your answers as a comment in your code.
+
+###### CORRECTED ANSWER ###########
 ### Answer: The first two principal components have a proportion of variance of either 48% for PC1 and 7% for PC2. After looking at each of the different plots, PC1 (which explains a significant 48% of the variance) may be capturing differences related to death hardiness, as there is notable separation in the PCA plot by this variable. This suggests that a large proportion of the variation in the dataset could be related to factors associated with death hardiness or conditions prior to death. While PC2 (7% variance) seems to be more associated with age group, as there is some degree of separation in that dimension with "older age" being more central with minimal vairance and those of younger age having a larger degree of variance, indicating that age may have a more subtle but still detectable effect on gene expression.
 
 #____________________________________________________________
@@ -121,7 +123,7 @@ num_significant_genes
 #____________________________________________________________
 # Step 2.4: Extract and interpret the results for differential expression by death classification
 res_DTHHRDY <- results(dds, name = "DTHHRDY_ventilator_case_vs_fast_death_of_natural_causes") %>%
-  as_tibble(rownames = "GENE_ID")
+  as_tibble(rownames = "GENE_NAME")
 
 res_DTHHRDY <- res_DTHHRDY %>%
   filter(!is.na(padj)) %>%
@@ -141,14 +143,16 @@ DTHHRDY_num_significant_genes
 # Exercise 3: Visualization
 #____________________________________________________________
 
-Sex_Volcano_Plot <- ggplot(data = res_SEX, aes(x = log2FoldChange, y = -log10(pvalue))) +
-  geom_point(aes(color = (abs(log2FoldChange) > 2 & pvalue < 1e-20))) +
-  geom_text(data = res_SEX %>% filter(abs(log2FoldChange) > 2 & pvalue < 1e-50),
-            aes(x = log2FoldChange, y = -log10(pvalue) + 10, label = GENE_NAME), size = 3,) +
+###### CORRECTED PLOT w/ ADJ P-VALUE ###########
+
+Sex_Volcano_Plot <- ggplot(data = res_SEX, aes(x = log2FoldChange, y = -log10(padj))) +
+  geom_point(aes(color = (abs(log2FoldChange) > 2 & padj < 1e-20))) +
+  geom_text(data = res_SEX %>% filter(abs(log2FoldChange) > 2 & padj < 1e-50),
+            aes(x = log2FoldChange, y = -log10(padj) + 10, label = GENE_NAME), size = 3) +
   theme_bw() +
   theme(legend.position = "none") +
   scale_color_manual(values = c("gray", "coral")) +
-  labs(y = expression(-log[10]("p-value")), x = expression(log[2]("fold change"))) +
+  labs(y = expression(-log[10]("adjusted p-value")), x = expression(log[2]("fold change"))) +
   ggtitle("Volcano Plot of Differential Gene Expression by Sex")
 
 Sex_Volcano_Plot
