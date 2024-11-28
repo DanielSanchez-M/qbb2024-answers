@@ -20,6 +20,7 @@ channels = ["DAPI", "PCNA", "nascentRNA"]
 ## Open an empty dictionary 
 images = {} 
 
+## Create a for loop to crate image array data
 for gene in genes:
     for field in fields:
         image = np.zeros((520, 616, 3), np.uint16)
